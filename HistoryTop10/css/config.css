@@ -1,0 +1,15 @@
+/* user agent styleシートの無効化 */
+ul {
+  -webkit-padding-start:0px;
+}
+
+/* html styleの設定 */
+body {
+  min-width  : 200px;
+  font-family: Verdana, Arial;
+  font-size  : 12px;
+}
+
+li {
+  list-style-type: none;
+}

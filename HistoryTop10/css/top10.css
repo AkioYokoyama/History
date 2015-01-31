@@ -1,0 +1,120 @@
+/* user agent styleシートの無効化 */
+ul {
+  -webkit-padding-start:0px;
+}
+h4 {
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after : 0em;
+}
+/* user agent styleシートの無効化 */
+
+/* html styleの設定 */
+body {
+  min-width  : 200px;
+  min-height : 100%;
+  font-family: Verdana, Arial;
+  font-size  : 12px;
+}
+/* html styleの設定 */
+
+/*tabの設定*/
+#tab{
+  text-align:left;
+  list-style:none;
+  margin:0;
+  padding:0;
+  line-height:24px;
+  position:relative;
+}
+#tab:before{
+  z-index:1;
+}
+#tab:after{
+  position:absolute;
+  content:"";
+  width:100%;
+  bottom:0;
+  left:0;
+  border-bottom:1px solid #aaa;
+  z-index:1;
+}
+#tab li{
+  margin: 0 10px;
+  padding:0 10px;
+  border:1px solid #aaa;
+  background:#ececec;
+  display:inline-block;
+  position:relative;
+  z-index:0;
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+  background:      -o-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+  background:     -ms-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+  background:    -moz-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+  background: -webkit-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+  background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+  margin: 0 -5px;
+  padding: 0 20px;
+}
+#tab li.selected,#tab li.present{
+  background:#fff;
+  color:#000;
+  z-index:2;
+  border-bottom-color:#fff;
+}
+#tab li:before, #tab li:after{
+  position:absolute;
+  bottom:-1px;
+  width:6px;
+  height:6px;
+}
+#tab li:before{
+  border-bottom-right-radius: 6px;
+  left:-6px;
+  border-width:0 1px 0 1px;
+  box-shadow:2px 2px 0 #ececec;
+}
+#tab li:after{
+  border-bottom-left-radius: 6px;
+  right:-6px;
+  border-width:0 0 1px 1px;
+  box-shadow:-2px 2px 0 #ececec;
+}
+#tab li:after,#tab li:before{
+  border:1px solid #aaa;
+}
+#tab li.selected:before{
+  box-shadow: 2px 2px 0 #fff;
+}
+#tab li.selected:after{
+  box-shadow: -2px 2px 0 #fff;
+}
+#tab li a {
+  text-decoration:none;
+}
+/*tabの設定*/
+
+/* 履歴一覧の設定 */
+#history {
+  list-style-type: none;
+}
+
+#favi {
+  padding: 3px 5px 0px 0px;
+}
+
+#history > li > a {
+  text-decoration: none;
+}
+
+#del {
+  padding-top: 6px;
+  float      : right;
+}
+
+#del:hover {
+  cursor : pointer;
+  filter : alpha(opacity=50);
+  opacity: 0.5;
+}
+/* 履歴一覧の設定 */
