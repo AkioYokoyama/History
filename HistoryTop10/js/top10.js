@@ -44,9 +44,9 @@ function buildPopupDom(divName, data) {
     delImg.addEventListener('click', onDelImgClick);
 
     var li = document.createElement('li');
+    li.appendChild(delImg);
     li.appendChild(favicon);
     li.appendChild(a);
-    li.appendChild(delImg);
     ul.appendChild(li);
 
     if (i > HISTORY_NUM) {break;}
@@ -65,7 +65,7 @@ function buildHistoryList(divName) {
 }
 
 function onDelImgClick(event) {
-  chrome.history.deleteUrl({url: event.toElement.del});
+  chrome.history.deleteUrl({url: event.path[0].del});
   event.srcElement.parentElement.parentElement.removeChild(event.srcElement.parentElement);
 }
 
