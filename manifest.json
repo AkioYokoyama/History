@@ -1,14 +1,17 @@
 {
-  "version"       : "1.0",
-  "name"          : "HistoryTop10",
-  "description"   : "よくアクセスするサイトのTop10を表示",
-  "permissions"   : ["history", "bookmarks", "tabs"],
-  "browser_action": {
-    "default_popup": "top10.html",
-    "default_icon": "img/clock.png"
+  "manifest_version": 3,
+  "name"            : "History",
+  "version"         : "1.1",
+
+  "description"   : "閲覧履歴の表示回数の多い順に表示",
+
+  "action": {
+    "default_icon": {
+      "16": "img/clock.png"
+    },
+    "default_popup": "top10.html"
   },
 
-  "options_page": "config.html",
-
-  "manifest_version": 2
+  "permissions"   : ["history", "bookmarks", "tabs"],
+  "options_page": "config.html"
 }
