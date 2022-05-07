@@ -1,13 +1,12 @@
 {
   "manifest_version": 3,
+  "version"         : "2.0",
   "name"            : "History",
-  "version"         : "1.1",
-
-  "description"   : "閲覧履歴の表示回数の多い順に表示",
+  "description"     : "閲覧履歴の表示回数の多い順に表示",
 
   "action": {
     "default_icon": {
-      "16": "img/clock.png"
+      "16": "img/Y.png"
     },
     "default_popup": "top10.html"
   },
