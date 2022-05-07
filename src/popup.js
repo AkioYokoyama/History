@@ -6,9 +6,26 @@ import './popup.scss'
 class Popup extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {histories: []}
+    this.state = {
+      histories: [],
+      isDeleted: false
+    }
+    this.handleClickDelete = this.handleClickDelete.bind(this)
     this.buildHistory()
   }
+
+  handleClickDelete(e) {
+    e.preventDefault()
+    chrome.history.deleteUrl({
+      url: e.currentTarget.dataset.url
+    })
+    const updatedHistories = this.state.histories.filter((deleteHistory) => {
+      return (deleteHistory.url !== e.currentTarget.dataset.url)
+    })
+
+    this.setState({histories: updatedHistories})
+  }
+
   buildHistory() {
     const microsecondsPerTerm = 1000 * 60 * 60 * 24 * 7;
     const term = (new Date()).getTime() - microsecondsPerTerm;
@@ -26,7 +43,7 @@ class Popup extends React.Component {
     return (
       <ul className="history">
         {this.state.histories.map((history) => {
-          return <HistoryItem history={history} />
+          return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
         })}
       </ul>
     )
@@ -47,18 +64,31 @@ function Favicon(props) {
 
 function HistoryItem(props) {
   return (
-    <li className="history__items">
+    <li className="history__items" key={props.history.id}>
       <Favicon url={props.history.url} />
       <a className="history__items--link" href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
-      <DeleteIcon />
+      <DeleteIcon onClickDelete={props.onClickDelete} url={props.history.url} />
     </li>
   )
 }
 
-function DeleteIcon(prpps) {
-  return (
-    <img className="history__items--delete" src="img/cross16.svg" alt="x" />
-  )
+
+class DeleteIcon extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {url: props.url}
+    this.handleClickDelete = this.handleClickDelete.bind(this)
+  }
+
+  handleClickDelete(e) {
+    this.props.onClickDelete(e)
+  }
+
+  render() {
+    return (
+      <img onClick={this.handleClickDelete} data-url={this.state.url} className="history__items--delete" src="img/cross16.svg" alt="x" />
+    )
+  }
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
