@@ -68,7 +68,12 @@ function HistoryItem(props) {
   return (
     <li className="history__items" key={props.history.id}>
       <Favicon url={props.history.url} />
-      <a className="history__items--link" href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
+      <a className="history__items--link"
+        href={props.history.url}
+        target="_blank"
+        rel="noreferrer">
+          {TruncateTitle.truncateTitle(props.history.title, 13)}
+      </a>
       <DeleteIcon onClickDelete={props.onClickDelete} url={props.history.url} />
     </li>
   )
@@ -88,7 +93,13 @@ class DeleteIcon extends React.Component {
 
   render() {
     return (
-      <img onClick={this.handleClickDelete} data-url={this.state.url} className="history__items--delete" src="img/cross16.svg" alt="x" />
+      <img
+        onClick={this.handleClickDelete}
+        data-url={this.state.url}
+        className="history__items--delete"
+        src="img/cross16.svg"
+        alt="x"
+      />
     )
   }
 }
