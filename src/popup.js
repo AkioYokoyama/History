@@ -7,10 +7,7 @@ import './popup.scss'
 class Popup extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      histories: [],
-      isDeleted: false
-    }
+    this.state = {histories: []}
     this.handleClickDelete = this.handleClickDelete.bind(this)
     this.buildHistory()
   }
@@ -26,7 +23,8 @@ class Popup extends React.Component {
   }
 
   buildHistory() {
-    const microsecondsPerTerm = 1000 * 60 * 60 * 24 * 7;
+    const historyDay = localStorage['term'] ? localStorage['term'] : 7
+    const microsecondsPerTerm = 1000 * 60 * 60 * 24 * historyDay
     const term = (new Date()).getTime() - microsecondsPerTerm;
 
     const reactObject = this
