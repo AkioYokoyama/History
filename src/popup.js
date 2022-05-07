@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import TruncateTitle from './truncateTitle'
+import './popup.scss'
 
 class Popup extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Popup extends React.Component {
 
   render() {
     return (
-      <ul>
+      <ul className="history">
         {this.state.histories.map((history) => {
           return <HistoryItem history={history} />
         })}
@@ -40,15 +41,15 @@ function Favicon(props) {
     favicon = faviconEndpoint + domain[1];
   }
   return (
-    <img src={favicon} width="15" height="15" alt="" />
+    <img className="history__items--favicon" src={favicon} alt="" />
   )
 }
 
 function HistoryItem(props) {
   return (
-    <li>
+    <li className="history__items">
       <Favicon url={props.history.url} />
-      <a href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
+      <a className="history__items--link" href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
     </li>
   )
 }
