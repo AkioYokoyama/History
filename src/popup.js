@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import TruncateTitle from './truncateTitle'
 
 class Popup extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ function HistoryItem(props) {
   return (
     <li>
       <Favicon url={props.history.url} />
-      <a href={props.history.url} target="_blank" rel="noreferrer">{props.history.title}</a>
+      <a href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
     </li>
   )
 }
