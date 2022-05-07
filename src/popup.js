@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import TruncateTitle from './truncateTitle'
+import DeleteHistory from './deleteHistory'
 import './popup.scss'
 
 class Popup extends React.Component {
@@ -16,9 +17,7 @@ class Popup extends React.Component {
 
   handleClickDelete(e) {
     e.preventDefault()
-    chrome.history.deleteUrl({
-      url: e.currentTarget.dataset.url
-    })
+    DeleteHistory.deleteHistory(e.currentTarget.dataset.url)
     const updatedHistories = this.state.histories.filter((deleteHistory) => {
       return (deleteHistory.url !== e.currentTarget.dataset.url)
     })
@@ -43,6 +42,9 @@ class Popup extends React.Component {
     return (
       <ul className="history">
         {this.state.histories.map((history) => {
+          if (history.title === '') {
+            DeleteHistory.deleteHistory(history.url)
+          }
           return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
         })}
       </ul>
