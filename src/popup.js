@@ -50,7 +50,14 @@ function HistoryItem(props) {
     <li className="history__items">
       <Favicon url={props.history.url} />
       <a className="history__items--link" href={props.history.url} target="_blank" rel="noreferrer">{TruncateTitle.truncateTitle(props.history.title, 13)}</a>
+      <DeleteIcon />
     </li>
+  )
+}
+
+function DeleteIcon(prpps) {
+  return (
+    <img className="history__items--delete" src="img/cross16.svg" alt="x" />
   )
 }
 
