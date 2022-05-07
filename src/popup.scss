@@ -21,6 +21,9 @@
       width: 9px;
       height: 9px;
       margin-top: 2px;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
