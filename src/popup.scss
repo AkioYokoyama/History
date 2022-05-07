@@ -1,0 +1,29 @@
+.history {
+  list-style-type: none;
+  padding: 0 0 0 10px;
+  width: 200px;
+  &__items {
+    padding-top: 3px;
+    &--link {
+      text-decoration: none;
+      &:hover {
+        opacity: 70%;
+      }
+    }
+    &--favicon {
+      width: 12px;
+      height: 12px;
+      vertical-align: middle;
+      margin: 0 2px 2px 0;
+    }
+    &--delete {
+      float: right;
+      width: 9px;
+      height: 9px;
+      margin-top: 2px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

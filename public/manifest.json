@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "version"         : "2.0",
+  "name"            : "History",
+  "description"     : "閲覧履歴の表示回数の多い順に表示",
+
+  "action": {
+    "default_icon": {
+      "16": "img/Y.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "permissions"   : ["history", "bookmarks", "tabs"],
+  "options_page": "options.html"
+}
