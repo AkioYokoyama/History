@@ -8,9 +8,9 @@
     "default_icon": {
       "16": "img/Y.png"
     },
-    "default_popup": "top10.html"
+    "default_popup": "popup.html"
   },
 
   "permissions"   : ["history", "bookmarks", "tabs"],
-  "options_page": "config.html"
+  "options_page": "options.html"
 }
