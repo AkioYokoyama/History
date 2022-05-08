@@ -1,5 +1,16 @@
+.garbage-box {
+  display: flex;
+  justify-content: end;
+  &--delete-all {
+    width: 16px;
+    height: 16px;
+    margin-right: -3px;
+  }
+}
+
 .history {
   list-style-type: none;
+  margin-top: 3px;
   padding: 0 0 0 10px;
   width: 200px;
   &__items {
