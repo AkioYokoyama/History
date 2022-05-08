@@ -9,6 +9,7 @@ class Popup extends React.Component {
     super(props)
     this.state = {histories: []}
     this.handleClickDelete = this.handleClickDelete.bind(this)
+    this.handleClickDeleteButton = this.handleClickDeleteButton.bind(this)
     this.buildHistory()
   }
 
@@ -20,6 +21,12 @@ class Popup extends React.Component {
     })
 
     this.setState({histories: updatedHistories})
+  }
+
+  handleClickDeleteButton(e) {
+    e.preventDefault()
+    chrome.history.deleteAll()
+    this.setState({histories: []})
   }
 
   buildHistory() {
@@ -38,14 +45,17 @@ class Popup extends React.Component {
 
   render() {
     return (
-      <ul className="history">
-        {this.state.histories.map((history) => {
-          if (history.title === '') {
-            DeleteHistory.deleteHistory(history.url)
-          }
-          return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
-        })}
-      </ul>
+      <div>
+        <DeleteAllButton onClickDeleteButton={this.handleClickDeleteButton} />
+        <ul className="history">
+          {this.state.histories.map((history) => {
+            if (history.title === '') {
+              DeleteHistory.deleteHistory(history.url)
+            }
+            return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
+          })}
+        </ul>
+      </div>
     )
   }
 }
@@ -98,6 +108,30 @@ class DeleteIcon extends React.Component {
         src="img/cross16.svg"
         alt="x"
       />
+    )
+  }
+}
+
+class DeleteAllButton extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleClickButton = this.handleClickButton.bind(this)
+  }
+
+  handleClickButton(e) {
+    this.props.onClickDeleteButton(e)
+  }
+
+  render() {
+    return (
+      <div className="garbage-box">
+        <img
+          onClick={this.handleClickButton}
+          className="garbage-box--delete-all"
+          src="img/delete-all.svg"
+          alt="全削除"
+        />
+      </div>
     )
   }
 }
