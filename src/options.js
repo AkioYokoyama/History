@@ -7,7 +7,6 @@ class OptionsForm extends React.Component {
     this.state = {
       number: localStorage['number'] ? localStorage['number'] : 100,
       term: localStorage['term'] ? localStorage['term'] : 7,
-      url: localStorage['url'] ? localStorage['url'] : ''
     }
     this.handleTermChange = this.handleTermChange.bind(this)
     this.handleNumberChange = this.handleNumberChange.bind(this)
@@ -36,7 +35,13 @@ class OptionsForm extends React.Component {
 
   handleFilterSubmit(e) {
     e.preventDefault()
-    localStorage['url'] = this.state.url
+
+    let filters = []
+    if (localStorage['filters']) {
+      filters = JSON.parse(localStorage['filters'])
+    }
+    filters.push(this.state.url)
+    localStorage['filters'] = JSON.stringify(filters)
   }
 
   render() {
@@ -62,13 +67,34 @@ class OptionsForm extends React.Component {
         <form onSubmit={this.handleFilterSubmit}>
           <div>
             <label>filter</label>
-            <input type="text" value={this.state.url} onChange={this.handleUrlChange} />
+            <input type="text" onChange={this.handleUrlChange} />
             <div><input type="submit" value="追加" /></div>
           </div>
         </form>
+        <FilterList />
       </div>
     )
   }
+}
+
+function FilterList(props) {
+  let filters = []
+  if (localStorage['filters']) {
+    filters = JSON.parse(localStorage['filters'])
+  }
+  return (
+    <ul>
+      {filters.map((filter) => {
+        return <FilterItem filter={filter} />
+      })}
+    </ul>
+  )
+}
+
+function FilterItem(props) {
+  return (
+    <li>{props.filter}</li>
+  )
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
