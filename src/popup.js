@@ -33,6 +33,7 @@ class Popup extends React.Component {
     const historyDay = localStorage['term'] ? localStorage['term'] : 7
     const microsecondsPerTerm = 1000 * 60 * 60 * 24 * historyDay
     const term = (new Date()).getTime() - microsecondsPerTerm;
+    const filters = localStorage['filters'] ? JSON.parse(localStorage['filters']) : []
 
     const reactObject = this
     chrome.history.search({'text': '', 'startTime': term}, (historyItems) => {
@@ -40,13 +41,20 @@ class Popup extends React.Component {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       })
       histories = histories.filter((history) => {
-        if (history.url.indexOf(localStorage['url']) !== -1) {
-          return DeleteHistory.deleteHistory(history.url)
-        }
         if (history.title === '') {
           return DeleteHistory.deleteHistory(history.url)
         }
-        return history
+
+        const deleted = filters.find((f) => {
+          if (history.url.indexOf(f) !== -1) {
+            DeleteHistory.deleteHistory(history.url)
+            return true
+          }
+          return false
+        })
+        if (!deleted) {
+          return history
+        }
       })
       reactObject.setState({histories: histories})
     });
