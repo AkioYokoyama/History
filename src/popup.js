@@ -36,8 +36,17 @@ class Popup extends React.Component {
 
     const reactObject = this
     chrome.history.search({'text': '', 'startTime': term}, (historyItems) => {
-      const histories = historyItems.sort((a, b) => {
+      let histories = historyItems.sort((a, b) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
+      })
+      histories = histories.filter((history) => {
+        if (history.url.indexOf(localStorage['url']) !== -1) {
+          return DeleteHistory.deleteHistory(history.url)
+        }
+        if (history.title === '') {
+          return DeleteHistory.deleteHistory(history.url)
+        }
+        return history
       })
       reactObject.setState({histories: histories})
     });
@@ -49,9 +58,6 @@ class Popup extends React.Component {
         <DeleteAllButton onClickDeleteButton={this.handleClickDeleteButton} />
         <ul className="history">
           {this.state.histories.map((history) => {
-            if (history.title === '') {
-              DeleteHistory.deleteHistory(history.url)
-            }
             return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
           })}
         </ul>
