@@ -1,103 +1,80 @@
 import React from 'react';
+import { FC, useState, useEffect } from "react"
 import ReactDOM from 'react-dom/client';
+import Filters from './filters';
 
-class OptionsForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      number: localStorage['number'] ? localStorage['number'] : 100,
-      term: localStorage['term'] ? localStorage['term'] : 7,
+const OptionsForm: FC = () => {
+  const [historyCount, setHistoryCount] = useState(100);
+  const [historyTerm, setHistoryTerm] = useState(7);
+  const [historyFilter, setHistoryFilter] = useState('');
+
+  const handleHistoryCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHistoryCount(Number(e.target.value));
+  }
+  const handleHistoryTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHistoryTerm(Number(e.target.value));
+  }
+  const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHistoryFilter(e.target.value);
+  }
+
+  const handleSubmit = () => {
+    localStorage['historyCount'] = historyCount;
+    localStorage['historyTerm'] = historyTerm;
+  }
+
+  const handleFilterSubmit = () => {
+    let filters;
+    if (localStorage['historyFilters']) {
+      filters = JSON.parse(localStorage['historyFilters'])
     }
-    this.handleTermChange = this.handleTermChange.bind(this)
-    this.handleNumberChange = this.handleNumberChange.bind(this)
-    this.handleUrlChange = this.handleUrlChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleFilterSubmit = this.handleFilterSubmit.bind(this)
+    filters.push(historyFilter)
+    localStorage['historyFilters'] = JSON.stringify(filters)
   }
 
-  handleNumberChange(e) {
-    this.setState({number: e.target.value})
-  }
-
-  handleTermChange(e) {
-    this.setState({term: e.target.value})
-  }
-
-  handleUrlChange(e) {
-    this.setState({url: e.target.value})
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    localStorage['number'] = this.state.number
-    localStorage['term'] = this.state.term
-  }
-
-  handleFilterSubmit(e) {
-    e.preventDefault()
-
-    let filters = []
-    if (localStorage['filters']) {
-      filters = JSON.parse(localStorage['filters'])
+  useEffect(() => {
+    if (localStorage['historyCount']) {
+      setHistoryCount(localStorage['historyCount']);
     }
-    filters.push(this.state.url)
-    localStorage['filters'] = JSON.stringify(filters)
-  }
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>
-              表示する履歴の数
-              <input type="text" value={this.state.number} onChange={this.handleNumberChange} />
-            </label>
-          </div>
+    if (localStorage['historyTerm']) {
+      setHistoryTerm(localStorage['historyTerm']);
+    }
+  }, []);
 
-          <div>
-            <label>
-              表示する履歴の期間
-              <input type="text" value={this.state.term} onChange={this.handleTermChange} />
-            </label>
-          </div>
-          <div><input type="submit" value="保存" /></div>
-        </form>
-
-        <form onSubmit={this.handleFilterSubmit}>
-          <div>
-            <label>filter</label>
-            <input type="text" onChange={this.handleUrlChange} />
-            <div><input type="submit" value="追加" /></div>
-          </div>
-        </form>
-        <FilterList />
-      </div>
-    )
-  }
-}
-
-function FilterList(props) {
-  let filters = []
-  if (localStorage['filters']) {
-    filters = JSON.parse(localStorage['filters'])
-  }
   return (
-    <ul>
-      {filters.map((filter) => {
-        return <FilterItem filter={filter} />
-      })}
-    </ul>
-  )
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            表示する履歴の数
+            <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            表示する履歴の期間
+            <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
+          </label>
+        </div>
+        <div><input type="submit" value="保存" /></div>
+      </form>
+
+      <form onSubmit={handleFilterSubmit}>
+        <div>
+          <label>filter</label>
+          <input type="text" onChange={handleHistoryFilterChange} />
+          <div><input type="submit" value="追加" /></div>
+        </div>
+      </form>
+      <Filters />
+    </div>
+  );
 }
 
-function FilterItem(props) {
-  return (
-    <li>{props.filter}</li>
-  )
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <OptionsForm />
-);
+const rootElement = document.getElementById('root');
+// https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
+root.render(<OptionsForm />);
