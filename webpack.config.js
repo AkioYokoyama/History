@@ -5,8 +5,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: './src/popup.js',
-    options: './src/options.js'
+    popup: './src/popup/popup.tsx',
+    options: './src/options/options.tsx'
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -20,17 +20,22 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-          test: /\.scss$/,
-          use: [
-              'style-loader',
-              {
-                  loader: 'css-loader',
-                  options: {
-                      url: false
-                  }
-              },
-              'sass-loader'
-          ],
+        test: /\.(ts|tsx)$/i,
+        loader: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+            'style-loader',
+            {
+                loader: 'css-loader',
+                options: {
+                    url: false
+                }
+            },
+            'sass-loader'
+        ],
       },
     ],
   },
