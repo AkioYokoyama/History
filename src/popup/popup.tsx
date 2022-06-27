@@ -1,53 +1,72 @@
 import React from 'react';
+import { FC, useState, useEffect, MouseEvent } from "react"
 import ReactDOM from 'react-dom/client';
-import TruncateTitle from './truncateTitle'
-import DeleteHistory from './deleteHistory'
+import Favicon from './Favicon';
 import './popup.scss'
 
-class Popup extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {histories: []}
-    this.handleClickDelete = this.handleClickDelete.bind(this)
-    this.handleClickDeleteButton = this.handleClickDeleteButton.bind(this)
-    this.buildHistory()
+type History = {
+  id: string;
+  url: string;
+  visitCount: number;
+  title: string;
+}
+
+const Popup: FC = () => {
+  const [histories, setHistories] = useState<History[]>([]);
+  const [historyCount, setHistoryCount] = useState(100);
+  const [historyTerm, setHistoryTerm] = useState(7);
+  const [historyFilters, setHistoryFilters] = useState([]);
+
+  const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
+  const truncateTitle = (length: number, title?: string) => {
+    if (!title) return title;
+    if (title.length > length) {
+      return title.substring(0, length);
+    }
+    return title;
   }
 
-  handleClickDelete(e) {
+  const handleClickDelete = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    DeleteHistory.deleteHistory(e.currentTarget.dataset.url)
-    const updatedHistories = this.state.histories.filter((deleteHistory) => {
-      return (deleteHistory.url !== e.currentTarget.dataset.url)
-    })
-
-    this.setState({histories: updatedHistories})
+    if (!e.currentTarget.dataset.url) return;
+    deleteHistory(e.currentTarget.dataset.url);
+    const updatedHistories = histories.filter((deleteHistory) => deleteHistory.url !== e.currentTarget.dataset.url);
+    setHistories(updatedHistories);
   }
 
-  handleClickDeleteButton(e) {
-    e.preventDefault()
+  const handleClickAllDeleteButton = () => {
     chrome.history.deleteAll()
-    this.setState({histories: []})
+    setHistories([])
   }
 
-  buildHistory() {
-    const historyDay = localStorage['term'] ? localStorage['term'] : 7
-    const microsecondsPerTerm = 1000 * 60 * 60 * 24 * historyDay
-    const term = (new Date()).getTime() - microsecondsPerTerm;
-    const filters = localStorage['filters'] ? JSON.parse(localStorage['filters']) : []
+  useEffect(() => {
+    if (localStorage['historyCount']) {
+      setHistoryCount(localStorage['historyCount']);
+    }
 
-    const reactObject = this
-    chrome.history.search({'text': '', 'startTime': term}, (historyItems) => {
-      let histories = historyItems.sort((a, b) => {
+    if (localStorage['historyTerm']) {
+      setHistoryTerm(localStorage['historyTerm']);
+    }
+
+    if (localStorage['historyFilters']) {
+      setHistoryFilters(JSON.parse(localStorage['historyFilters']));
+    }
+  }, []);
+
+  useEffect(() => {
+    // TODO any型
+    chrome.history.search({'text': '', 'startTime': historyTerm}, (historyItems: any) => {
+      const sortHistories = historyItems.sort((a: History, b: History) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
-      })
-      histories = histories.filter((history) => {
+      });
+      const filteredHistories = sortHistories.filter((history: History) => {
         if (history.title === '') {
-          return DeleteHistory.deleteHistory(history.url)
+          return deleteHistory(history.url)
         }
 
-        const deleted = filters.find((f) => {
+        const deleted = historyFilters.find((f): boolean => {
           if (history.url.indexOf(f) !== -1) {
-            DeleteHistory.deleteHistory(history.url)
+            deleteHistory(history.url)
             return true
           }
           return false
@@ -55,100 +74,50 @@ class Popup extends React.Component {
         if (!deleted) {
           return history
         }
-      })
-      reactObject.setState({histories: histories})
+        return;
+      });
+      setHistories(filteredHistories);
     });
-  }
+  }, []);
 
-  render() {
-    return (
+  return (
       <div>
-        <DeleteAllButton onClickDeleteButton={this.handleClickDeleteButton} />
+        <div className="garbage-box">
+          <img
+            onClick={handleClickAllDeleteButton}
+            className="garbage-box--delete-all"
+            src="img/delete-all.svg"
+            alt="全削除"
+          />
+        </div>
         <ul className="history">
-          {this.state.histories.map((history) => {
-            return <HistoryItem onClickDelete={this.handleClickDelete} history={history} />
+          {histories.map((history) => {
+            return (
+              <li className="history__items" key={history.id}>
+                <Favicon url={history.url} />
+                <a className="history__items--link"
+                  href={history.url}
+                  target="_blank"
+                  rel="noreferrer">
+                    {truncateTitle(13, history.title)}
+                </a>
+                <img
+                  onClick={handleClickDelete}
+                  data-url={history.url}
+                  className="history__items--delete"
+                  src="img/cross16.svg"
+                  alt="x"
+                />
+              </li>
+            )
           })}
         </ul>
       </div>
-    )
-  }
+  );
 }
 
-function Favicon(props) {
-  const domain = props.url.match(/^[httpsfile]+:\/{2,3}([0-9a-zA-Z\.\-:]+?):?[0-9]*?\//i);
-  const faviconEndpoint = 'http://www.google.com/s2/favicons?domain=';
-  let favicon = ''
-  if (domain) {
-    favicon = faviconEndpoint + domain[1];
-  }
-  return (
-    <img className="history__items--favicon" src={favicon} alt="" />
-  )
-}
-
-function HistoryItem(props) {
-  return (
-    <li className="history__items" key={props.history.id}>
-      <Favicon url={props.history.url} />
-      <a className="history__items--link"
-        href={props.history.url}
-        target="_blank"
-        rel="noreferrer">
-          {TruncateTitle.truncateTitle(props.history.title, 13)}
-      </a>
-      <DeleteIcon onClickDelete={props.onClickDelete} url={props.history.url} />
-    </li>
-  )
-}
-
-
-class DeleteIcon extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {url: props.url}
-    this.handleClickDelete = this.handleClickDelete.bind(this)
-  }
-
-  handleClickDelete(e) {
-    this.props.onClickDelete(e)
-  }
-
-  render() {
-    return (
-      <img
-        onClick={this.handleClickDelete}
-        data-url={this.state.url}
-        className="history__items--delete"
-        src="img/cross16.svg"
-        alt="x"
-      />
-    )
-  }
-}
-
-class DeleteAllButton extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleClickButton = this.handleClickButton.bind(this)
-  }
-
-  handleClickButton(e) {
-    this.props.onClickDeleteButton(e)
-  }
-
-  render() {
-    return (
-      <div className="garbage-box">
-        <img
-          onClick={this.handleClickButton}
-          className="garbage-box--delete-all"
-          src="img/delete-all.svg"
-          alt="全削除"
-        />
-      </div>
-    )
-  }
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+// https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
 root.render(<Popup />);
