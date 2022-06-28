@@ -5,14 +5,13 @@ const Filters: FC = () => {
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
-    if (localStorage['historyFilters']) {
-      setFilters(JSON.parse(localStorage['historyFilters']));
-    }
-  }, []);
+    const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
+    setFilters(JSON.parse(storageHistoryFilters));
+  }, [filters]);
 
   return (
     <ul>
-      {filters.map((filter) => {
+      {filters.map((filter: string) => {
         return <li>{filter}</li>
       })}
     </ul>

@@ -4,70 +4,62 @@ import ReactDOM from 'react-dom/client';
 import Filters from './filters';
 
 const OptionsForm: FC = () => {
-  const [historyCount, setHistoryCount] = useState(100);
-  const [historyTerm, setHistoryTerm] = useState(7);
-  const [historyFilter, setHistoryFilter] = useState('');
+  const storageHistoryCount: string = localStorage.getItem('historyCount') ?? '100';
+  const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
+  const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
 
-  const handleHistoryCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHistoryCount(Number(e.target.value));
+  const [historyCount, setHistoryCount] = useState(storageHistoryCount);
+  const [historyTerm, setHistoryTerm] = useState(storageHistoryTerm);
+  const [historyFilter, setHistoryFilter] = useState('');
+  const [historyFilters, setHistoryFilters] = useState(storageHistoryFilters);
+
+  const handleHistoryCountChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setHistoryCount(e.target.value);
   }
-  const handleHistoryTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHistoryTerm(Number(e.target.value));
+  const handleHistoryTermChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setHistoryTerm(e.target.value);
   }
-  const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setHistoryFilter(e.target.value);
   }
 
-  const handleSubmit = () => {
-    localStorage['historyCount'] = historyCount;
-    localStorage['historyTerm'] = historyTerm;
+  const handleSaveButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
+    localStorage.setItem('historyCount', historyCount);
+    localStorage.setItem('historyTerm', historyTerm);
+    e.preventDefault();
   }
 
-  const handleFilterSubmit = () => {
-    let filters;
-    if (localStorage['historyFilters']) {
-      filters = JSON.parse(localStorage['historyFilters'])
-    }
+  const handleAddButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
+    if (!historyFilter) return;
+
+    const filters = JSON.parse(historyFilters);
     filters.push(historyFilter)
-    localStorage['historyFilters'] = JSON.stringify(filters)
+    localStorage.setItem('historyFilters', JSON.stringify(filters));
   }
-
-  useEffect(() => {
-    if (localStorage['historyCount']) {
-      setHistoryCount(localStorage['historyCount']);
-    }
-
-    if (localStorage['historyTerm']) {
-      setHistoryTerm(localStorage['historyTerm']);
-    }
-  }, []);
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            表示する履歴の数
-            <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
-          </label>
-        </div>
+      <div>
+        <label>
+          表示する履歴の数
+          <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
+        </label>
+      </div>
 
-        <div>
-          <label>
-            表示する履歴の期間
-            <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
-          </label>
-        </div>
-        <div><input type="submit" value="保存" /></div>
-      </form>
+      <div>
+        <label>
+          表示する履歴の期間
+          <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
+        </label>
+      </div>
+      <div><input type="button" value="保存" onClick={handleSaveButtonClick} /></div>
 
-      <form onSubmit={handleFilterSubmit}>
-        <div>
-          <label>filter</label>
-          <input type="text" onChange={handleHistoryFilterChange} />
-          <div><input type="submit" value="追加" /></div>
-        </div>
-      </form>
+      <div>
+        <label>filter</label>
+        <input type="text" onChange={handleHistoryFilterChange} />
+        <div><input type="button" value="追加" onClick={handleAddButtonClick} /></div>
+      </div>
+
       <Filters />
     </div>
   );
