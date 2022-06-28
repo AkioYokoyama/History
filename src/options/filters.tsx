@@ -25,10 +25,12 @@ const Filters: FC = () => {
 
   return (
     <>
-      <div>
-        <label>filter</label>
-        <input type="text" onChange={handleHistoryFilterChange} />
-        <div><input type="button" value="追加" onClick={handleAddButtonClick} /></div>
+      <div className="options__filter">
+        <div>filter</div>
+        <input className="options__section" type="text" onChange={handleHistoryFilterChange} />
+        <div className="options__button-area">
+          <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
+        </div>
       </div>
       <ul>
         {filters.map((filter: string) => {
