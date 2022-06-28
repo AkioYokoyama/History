@@ -2,6 +2,7 @@ import React from 'react';
 import { FC, useState } from "react"
 import ReactDOM from 'react-dom/client';
 import Filters from './filters';
+import './options.scss'
 
 const OptionsForm: FC = () => {
   const storageHistoryCount: string = localStorage.getItem('historyCount') ?? '100';
@@ -24,21 +25,20 @@ const OptionsForm: FC = () => {
   }
 
   return (
-    <div>
-      <div>
-        <label>
-          表示する履歴の数
-          <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
-        </label>
+    <div className="options">
+      <div className="options__section">
+        <div>表示する履歴の数</div>
+        <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
       </div>
 
-      <div>
-        <label>
-          表示する履歴の期間
-          <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
-        </label>
+      <div className="options__section">
+        <div>表示する履歴の期間</div>
+        <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
       </div>
-      <div><input type="button" value="保存" onClick={handleSaveButtonClick} /></div>
+
+      <div className="options__button-area">
+        <input className="options__button options__button--save" type="button" value="保存" onClick={handleSaveButtonClick} />
+      </div>
 
       <Filters />
     </div>

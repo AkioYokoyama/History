@@ -1,0 +1,23 @@
+.options {
+  width: 150px;
+  &__section {
+    margin-bottom: 10px;
+  }
+  &__button-area {
+    text-align: center;
+  }
+  &__button {
+    border-radius: 3px;
+    border: none;
+    color: white;
+    width: 50px;
+    &--save {
+      background: orange;
+    }
+    &--add {
+      background: purple;
+    }
+  }
+  &__filter {
+  }
+}
