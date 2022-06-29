@@ -15,7 +15,6 @@ const Popup: FC = () => {
   const [histories, setHistories] = useState<History[]>([]);
   const [historyCount, setHistoryCount] = useState(100);
   const [historyTerm, setHistoryTerm] = useState(7);
-  const [historyFilters, setHistoryFilters] = useState([]);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
   const truncateTitle = (length: number, title?: string) => {
@@ -24,6 +23,14 @@ const Popup: FC = () => {
       return title.substring(0, length);
     }
     return title;
+  }
+
+  const getFilters = (): string[] => {
+    const storageFilters = localStorage.getItem('historyFilters');
+    if (storageFilters) {
+        return JSON.parse(storageFilters);
+    }
+    return [];
   }
 
   const handleClickDelete = (e: MouseEvent<HTMLElement>) => {
@@ -47,10 +54,6 @@ const Popup: FC = () => {
     if (localStorage['historyTerm']) {
       setHistoryTerm(localStorage['historyTerm']);
     }
-
-    if (localStorage['historyFilters']) {
-      setHistoryFilters(JSON.parse(localStorage['historyFilters']));
-    }
   }, []);
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const Popup: FC = () => {
           return deleteHistory(history.url)
         }
 
-        const deleted = historyFilters.find((f): boolean => {
+        const deleted = getFilters().find((f): boolean => {
           if (history.url.indexOf(f) !== -1) {
             deleteHistory(history.url)
             return true
