@@ -63,7 +63,7 @@ const Popup: FC = () => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       });
       const filteredHistories = sortHistories.filter((history: History) => {
-        const matched = getFilters().find((f): boolean => history.url.indexOf(f) !== -1);
+        const matched = getFilters().find((f): boolean => history.url === f);
         if (!matched || history.title === '') {
           return deleteHistory(history.url);
         }
