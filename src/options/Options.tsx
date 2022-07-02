@@ -1,10 +1,10 @@
 import React from 'react';
 import { FC, useState } from "react"
 import ReactDOM from 'react-dom/client';
-import Filters from './filters';
+import FiltersInput from './FiltersInput';
 import './options.scss'
 
-const OptionsForm: FC = () => {
+const Options: FC = () => {
   const storageHistoryCount: string = localStorage.getItem('historyCount') ?? '100';
   const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
 
@@ -40,7 +40,7 @@ const OptionsForm: FC = () => {
         <input className="options__button options__button--save" type="button" value="保存" onClick={handleSaveButtonClick} />
       </div>
 
-      <Filters />
+      <FiltersInput />
     </div>
   );
 }
@@ -49,4 +49,4 @@ const rootElement = document.getElementById('root');
 // https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
 if (!rootElement) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(rootElement);
-root.render(<OptionsForm />);
+root.render(<Options />);

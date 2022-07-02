@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC, useState, useEffect } from "react"
 
-const Filters: FC = () => {
+const FiltersInput: FC = () => {
   const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
 
   const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
@@ -41,4 +41,4 @@ const Filters: FC = () => {
   );
 }
 
-export default Filters;
+export default FiltersInput;
