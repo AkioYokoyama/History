@@ -25,23 +25,24 @@ const Options: FC = () => {
   }
 
   return (
-    <div className="options">
-      <div className="options__section">
-        <div>表示する履歴の数</div>
-        <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
-      </div>
+    <>
+      <div className="options">
+        <div className="options__section">
+          <div>表示する履歴の数</div>
+          <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
+        </div>
 
-      <div className="options__section">
-        <div>表示する履歴の期間</div>
-        <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
-      </div>
+        <div className="options__section">
+          <div>表示する履歴の期間</div>
+          <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
+        </div>
 
-      <div className="options__button-area">
-        <input className="options__button options__button--save" type="button" value="保存" onClick={handleSaveButtonClick} />
+        <div className="options__button-area">
+          <input className="options__button options__button--save" type="button" value="保存" onClick={handleSaveButtonClick} />
+        </div>
       </div>
-
       <FiltersInput />
-    </div>
+    </>
   );
 }
 

@@ -18,6 +18,15 @@
       background: purple;
     }
   }
-  &__filter {
+}
+
+.filters {
+  margin-top: 20px;
+  &__button-area {
+    text-align: center;
+    width: 150px;
+  }
+  &__list {
+    margin-left: -26px;
   }
 }
