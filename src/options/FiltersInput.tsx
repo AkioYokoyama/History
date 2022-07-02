@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC, useState, useEffect } from "react"
 
-const Filters: FC = () => {
+const FiltersInput: FC = () => {
   const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
 
   const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
@@ -24,21 +24,19 @@ const Filters: FC = () => {
   }
 
   return (
-    <>
-      <div className="options__filter">
-        <div>filter</div>
-        <input className="options__section" type="text" onChange={handleHistoryFilterChange} />
-        <div className="options__button-area">
-          <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
-        </div>
+    <div className="filters">
+      <div>filter</div>
+      <input className="options__section" type="text" onChange={handleHistoryFilterChange} />
+      <div className="filters__button-area">
+        <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
       </div>
-      <ul>
+      <ul className="filters__list">
         {filters.map((filter: string) => {
           return <li>{filter}</li>
         })}
       </ul>
-    </>
+    </div>
   );
 }
 
-export default Filters;
+export default FiltersInput;
