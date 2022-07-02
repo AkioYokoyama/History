@@ -2,17 +2,16 @@ import React from 'react';
 import { FC, useState, useEffect } from "react"
 
 const Filters: FC = () => {
-  const [filters, setFilters] = useState([]);
+  const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
+
+  const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
   const [historyFilter, setHistoryFilter] = useState('');
 
   const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setHistoryFilter(e.target.value);
   }
 
-  useEffect(() => {
-    const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
-    setFilters(JSON.parse(storageHistoryFilters));
-  }, [filters]);
+  useEffect(() => { }, [filters]);
 
   const handleAddButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
     if (!historyFilter) return;
@@ -21,6 +20,7 @@ const Filters: FC = () => {
     const filters = JSON.parse(historyFilters);
     filters.push(historyFilter)
     localStorage.setItem('historyFilters', JSON.stringify(filters));
+    setFilters(filters);
   }
 
   return (
