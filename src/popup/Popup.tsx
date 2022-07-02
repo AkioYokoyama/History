@@ -1,5 +1,5 @@
 import React from 'react';
-import { FC, useState, useEffect, MouseEvent } from "react"
+import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from "react"
 import ReactDOM from 'react-dom/client';
 import Favicon from './Favicon';
 import './popup.scss'
@@ -56,32 +56,22 @@ const Popup: FC = () => {
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // TODO any型
     chrome.history.search({'text': '', 'startTime': historyTerm}, (historyItems: any) => {
       const sortHistories = historyItems.sort((a: History, b: History) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       });
       const filteredHistories = sortHistories.filter((history: History) => {
-        if (history.title === '') {
-          return deleteHistory(history.url)
+        const matched = getFilters().find((f): boolean => history.url.indexOf(f) !== -1);
+        if (!matched || history.title === '') {
+          return deleteHistory(history.url);
         }
-
-        const deleted = getFilters().find((f): boolean => {
-          if (history.url.indexOf(f) !== -1) {
-            deleteHistory(history.url)
-            return true
-          }
-          return false
-        })
-        if (!deleted) {
-          return history
-        }
-        return;
+        return history;
       });
       setHistories(filteredHistories);
     });
-  }, []);
+  }, [histories]);
 
   return (
       <div>
