@@ -6,12 +6,13 @@ const FiltersInput: FC = () => {
 
   const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
   const [historyFilter, setHistoryFilter] = useState('');
+  const [formValue, setFormValue] = useState('');
 
   const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setHistoryFilter(e.target.value);
   }
 
-  useEffect(() => { }, [filters]);
+  useEffect(() => { }, [filters, formValue]);
 
   const handleAddButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
     if (!historyFilter) return;
@@ -21,12 +22,13 @@ const FiltersInput: FC = () => {
     filters.push(historyFilter)
     localStorage.setItem('historyFilters', JSON.stringify(filters));
     setFilters(filters);
+    setFormValue('');
   }
 
   return (
     <div className="filters">
       <div>filter</div>
-      <input className="options__section" type="text" onChange={handleHistoryFilterChange} />
+      <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryFilterChange} />
       <div className="filters__button-area">
         <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
       </div>
