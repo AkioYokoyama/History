@@ -3,6 +3,7 @@ import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from "react"
 import ReactDOM from 'react-dom/client';
 import Favicon from './Favicon';
 import './popup.scss'
+import truncateTitle from './truncateTitle'
 
 type History = {
   id: string;
@@ -17,13 +18,6 @@ const Popup: FC = () => {
   const [historyTerm, setHistoryTerm] = useState(7);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
-  const truncateTitle = (length: number, title?: string) => {
-    if (!title) return title;
-    if (title.length > length) {
-      return title.substring(0, length);
-    }
-    return title;
-  }
 
   const getFilters = (): string[] => {
     const storageFilters = localStorage.getItem('historyFilters');
