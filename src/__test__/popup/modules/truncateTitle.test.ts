@@ -1,4 +1,4 @@
-import truncateTitle from '../popup/truncateTitle'
+import truncateTitle from '../../../popup/modules/truncateTitle'
  
 test('titleが空の場合、空が返る', () => {
     expect(truncateTitle(10, '')).toMatch('');
