@@ -1,19 +1,12 @@
 import React, { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
 import ReactDOM from 'react-dom/client';
-import Favicon from './components/Favicon';
+import History from './components/History';
 import GarbageBox from './components/GarbageBox';
+import { HistoryType } from './types/HistoryType'
 import './popup.scss'
-import truncateTitle from './modules/truncateTitle'
-
-type History = {
-  id: string;
-  url: string;
-  visitCount: number;
-  title: string;
-}
 
 const Popup: FC = () => {
-  const [histories, setHistories] = useState<History[]>([]);
+  const [histories, setHistories] = useState<HistoryType[]>([]);
   const [historyCount, setHistoryCount] = useState(100);
   const [historyTerm, setHistoryTerm] = useState(7);
 
@@ -53,10 +46,10 @@ const Popup: FC = () => {
   useLayoutEffect(() => {
     // TODO any型
     chrome.history.search({'text': '', 'startTime': historyTerm}, (historyItems: any) => {
-      const sortHistories = historyItems.sort((a: History, b: History) => {
+      const sortHistories = historyItems.sort((a: HistoryType, b: HistoryType) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       });
-      const filteredHistories = sortHistories.filter((history: History) => {
+      const filteredHistories = sortHistories.filter((history: HistoryType) => {
         const matched = getFilters().find((f): boolean => history.url === f);
         if (!matched || history.title === '') {
           return deleteHistory(history.url);
@@ -68,31 +61,10 @@ const Popup: FC = () => {
   }, [histories]);
 
   return (
-      <div>
-        <GarbageBox handleClickAllDeleteButton={handleClickAllDeleteButton} />
-        <ul className="history">
-          {histories.map((history) => {
-            return (
-              <li className="history__items" key={history.id}>
-                <Favicon url={history.url} />
-                <a className="history__items--link"
-                  href={history.url}
-                  target="_blank"
-                  rel="noreferrer">
-                    {truncateTitle(13, history.title)}
-                </a>
-                <img
-                  onClick={handleClickDelete}
-                  data-url={history.url}
-                  className="history__items--delete"
-                  src="img/cross16.svg"
-                  alt="x"
-                />
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+    <div>
+      <GarbageBox handleClickAllDeleteButton={handleClickAllDeleteButton} />
+      <History histories={histories} handleClickDelete={handleClickDelete} />
+    </div>
   );
 }
 
