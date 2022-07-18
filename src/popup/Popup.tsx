@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from "react"
 import ReactDOM from 'react-dom/client';
-import Favicon from './Favicon';
+import Favicon from './components/Favicon';
 import GarbageBox from './components/GarbageBox';
 import './popup.scss'
 import truncateTitle from './modules/truncateTitle'
