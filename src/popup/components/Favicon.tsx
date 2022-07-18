@@ -1,6 +1,6 @@
 import React from 'react';
 import { FC, useState, useEffect } from "react"
-import './popup.scss'
+import '../popup.scss'
 
 const Favicon: FC<{url: string}> = ({url}) => {
   const [favicon, setFavicon] = useState('');
