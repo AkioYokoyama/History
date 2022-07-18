@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from "react"
+import React, { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
 import ReactDOM from 'react-dom/client';
 import Favicon from './components/Favicon';
 import GarbageBox from './components/GarbageBox';
