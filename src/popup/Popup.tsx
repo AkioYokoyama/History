@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import Favicon from './Favicon';
 import GarbageBox from './components/GarbageBox';
 import './popup.scss'
-import truncateTitle from './truncateTitle'
+import truncateTitle from './modules/truncateTitle'
 
 type History = {
   id: string;
