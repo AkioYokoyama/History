@@ -2,6 +2,7 @@ import React from 'react';
 import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from "react"
 import ReactDOM from 'react-dom/client';
 import Favicon from './Favicon';
+import GarbageBox from './components/GarbageBox';
 import './popup.scss'
 import truncateTitle from './truncateTitle'
 
@@ -69,14 +70,7 @@ const Popup: FC = () => {
 
   return (
       <div>
-        <div className="garbage-box">
-          <img
-            onClick={handleClickAllDeleteButton}
-            className="garbage-box--delete-all"
-            src="img/delete-all.svg"
-            alt="全削除"
-          />
-        </div>
+        <GarbageBox handleClickAllDeleteButton={handleClickAllDeleteButton} />
         <ul className="history">
           {histories.map((history) => {
             return (
