@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
+import { FC, useState, useEffect, MouseEvent } from 'react';
 import { History } from './History';
 import { GarbageBox } from './GarbageBox';
 import { HistoryType } from '../types/HistoryType'
@@ -31,7 +31,7 @@ export const Popup: FC = () => {
     setHistories([]);
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // TODO any型
     chrome.history.search({'text': '', 'startTime': historyTerm}, (historyItems: any) => {
       const sortHistories = historyItems.sort((a: HistoryType, b: HistoryType) => {
@@ -46,7 +46,7 @@ export const Popup: FC = () => {
       });
       setHistories(filteredHistories);
     });
-  }, [histories]);
+  }, [histories, historyTerm]);
 
   return (
     <div>
