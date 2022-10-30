@@ -1,4 +1,3 @@
-import React from 'react';
 import { FC, useState, useEffect } from "react"
 import '../styleseets/popup.scss'
 

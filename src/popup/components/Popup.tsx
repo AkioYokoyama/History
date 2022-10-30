@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
+import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
 import History from './History';
 import GarbageBox from './GarbageBox';
 import { HistoryType } from '../types/HistoryType'
@@ -6,7 +6,7 @@ import '../styleseets/popup.scss'
 
 export const Popup: FC = () => {
   const [histories, setHistories] = useState<HistoryType[]>([]);
-  const [historyCount, setHistoryCount] = useState(100);
+  const [, setHistoryCount] = useState(100);
   const [historyTerm, setHistoryTerm] = useState(7);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });

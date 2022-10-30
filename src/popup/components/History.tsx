@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Favicon from './Favicon';
 import '../styleseets/popup.scss'
 import truncateTitle from '../modules/truncateTitle'
