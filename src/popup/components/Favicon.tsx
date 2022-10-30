@@ -12,11 +12,7 @@ const Favicon: FC<{url: string}> = ({url}) => {
     }
   }, [url]);
 
-  return (
-    <>
-      <img className="history__items--favicon" src={favicon} alt="" />
-    </>
-  );
+  return <img className="history__items--favicon" src={favicon} alt="" />;
 }
 
 export default Favicon;
