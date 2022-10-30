@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import '../popup.scss'
+import { FC } from 'react';
+import '../styleseets/popup.scss'
 
-const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
+export const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
   return (
     <div className="garbage-box">
       <img
@@ -13,5 +13,3 @@ const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClic
     </div>
   );
 }
-
-export default GarbageBox;

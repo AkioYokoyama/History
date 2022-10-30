@@ -5,21 +5,13 @@ import FiltersInput from './FiltersInput';
 import './options.scss'
 
 const Options: FC = () => {
-  const storageHistoryCount: string = localStorage.getItem('historyCount') ?? '100';
   const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
-
-  const [historyCount, setHistoryCount] = useState(storageHistoryCount);
   const [historyTerm, setHistoryTerm] = useState(storageHistoryTerm);
 
-  const handleHistoryCountChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setHistoryCount(e.target.value);
-  }
   const handleHistoryTermChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setHistoryTerm(e.target.value);
   }
-
   const handleSaveButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
-    localStorage.setItem('historyCount', historyCount);
     localStorage.setItem('historyTerm', historyTerm);
     e.preventDefault();
   }
@@ -27,11 +19,6 @@ const Options: FC = () => {
   return (
     <>
       <div className="options">
-        <div className="options__section">
-          <div>表示する履歴の数</div>
-          <input type="text" defaultValue={historyCount} onChange={handleHistoryCountChange} />
-        </div>
-
         <div className="options__section">
           <div>表示する履歴の期間</div>
           <input type="text" defaultValue={historyTerm} onChange={handleHistoryTermChange} />
