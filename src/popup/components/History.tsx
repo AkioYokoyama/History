@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import Favicon from './Favicon';
+import { Favicon } from './Favicon';
 import '../styleseets/popup.scss'
 import truncateTitle from '../modules/truncateTitle'
 import { HistoryProps } from '../types/HistoryType'
 
-const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
+export const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
   return (
     <ul className="history">
       {histories.map((history) => {
@@ -30,5 +30,3 @@ const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
     </ul>
   );
 }
-
-export default History;

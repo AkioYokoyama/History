@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
-import History from './History';
-import GarbageBox from './GarbageBox';
+import { History } from './History';
+import { GarbageBox } from './GarbageBox';
 import { HistoryType } from '../types/HistoryType'
 import '../styleseets/popup.scss'
 
