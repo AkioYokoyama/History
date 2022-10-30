@@ -19,7 +19,7 @@ export const Popup: FC = () => {
   }
 
   const handleClickDelete = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!e.currentTarget.dataset.url) return;
     deleteHistory(e.currentTarget.dataset.url);
     const updatedHistories = histories.filter((deleteHistory) => deleteHistory.url !== e.currentTarget.dataset.url);
@@ -27,8 +27,8 @@ export const Popup: FC = () => {
   }
 
   const handleClickAllDeleteButton = () => {
-    chrome.history.deleteAll()
-    setHistories([])
+    chrome.history.deleteAll();
+    setHistories([]);
   }
 
   useLayoutEffect(() => {
