@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Favicon from './Favicon';
-import '../popup.scss'
+import '../styleseets/popup.scss'
 import truncateTitle from '../modules/truncateTitle'
 import { HistoryProps } from '../types/HistoryType'
 

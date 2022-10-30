@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import '../popup.scss'
+import '../styleseets/popup.scss'
 
 const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
   return (

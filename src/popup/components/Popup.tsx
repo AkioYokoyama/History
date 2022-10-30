@@ -1,11 +1,10 @@
 import React, { FC, useState, useEffect, useLayoutEffect, MouseEvent } from 'react';
-import ReactDOM from 'react-dom/client';
-import History from './components/History';
-import GarbageBox from './components/GarbageBox';
-import { HistoryType } from './types/HistoryType'
-import './popup.scss'
+import History from './History';
+import GarbageBox from './GarbageBox';
+import { HistoryType } from '../types/HistoryType'
+import '../styleseets/popup.scss'
 
-const Popup: FC = () => {
+export const Popup: FC = () => {
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [historyCount, setHistoryCount] = useState(100);
   const [historyTerm, setHistoryTerm] = useState(7);
@@ -67,8 +66,3 @@ const Popup: FC = () => {
     </div>
   );
 }
-
-const rootElement = document.getElementById('root');
-if (!rootElement) throw new Error('Failed to find the root element');
-const root = ReactDOM.createRoot(rootElement);
-root.render(<Popup />);
