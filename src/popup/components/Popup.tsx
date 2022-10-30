@@ -6,7 +6,7 @@ import '../styleseets/popup.scss'
 
 export const Popup: FC = () => {
   const [histories, setHistories] = useState<HistoryType[]>([]);
-  const [historyTerm, setHistoryTerm] = useState(7);
+  const [historyTerm, ] = useState(localStorage['historyTerm'] ?? localStorage['historyTerm']);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
 
@@ -30,12 +30,6 @@ export const Popup: FC = () => {
     chrome.history.deleteAll()
     setHistories([])
   }
-
-  useEffect(() => {
-    if (localStorage['historyTerm']) {
-      setHistoryTerm(localStorage['historyTerm']);
-    }
-  }, []);
 
   useLayoutEffect(() => {
     // TODO any型
