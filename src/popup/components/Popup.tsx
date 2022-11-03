@@ -7,6 +7,7 @@ import '../styleseets/popup.scss'
 export const Popup: FC = () => {
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [historyTerm, ] = useState(localStorage['historyTerm'] ?? localStorage['historyTerm']);
+  const [isInitialize, setIsInitialize] = useState(false);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
 
@@ -45,8 +46,13 @@ export const Popup: FC = () => {
         return history;
       });
       setHistories(filteredHistories);
+      setIsInitialize(true);
     });
-  }, [histories, historyTerm]);
+  }, [isInitialize, historyTerm]);
+
+  if (!isInitialize) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
