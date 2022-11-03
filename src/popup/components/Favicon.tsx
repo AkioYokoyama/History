@@ -8,7 +8,7 @@ export const Favicon: FC<{url: string}> = ({url}) => {
     const domain = url.match(/^[httpsfile]+:\/{2,3}([0-9a-zA-Z.\-:]+?):?[0-9]*?\//i);
     const faviconEndpoint = 'http://www.google.com/s2/favicons?domain=';
     if (domain) {
-      setFavicon(faviconEndpoint + domain[1]);
+      setFavicon(faviconEndpoint + domain[0]);
     }
   }, [url]);
 
