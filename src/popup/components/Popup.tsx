@@ -50,10 +50,6 @@ export const Popup: FC = () => {
     });
   }, [isInitialize, historyTerm]);
 
-  if (!isInitialize) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <GarbageBox handleClickAllDeleteButton={handleClickAllDeleteButton} />
