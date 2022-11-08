@@ -34,7 +34,7 @@ export const Popup: FC = () => {
 
   useEffect(() => {
     // TODO any型
-    chrome.history.search({'text': '', 'startTime': historyTerm}, (historyItems: any) => {
+    chrome.history.search({'text': '', 'startTime': Number(historyTerm)}, (historyItems: any) => {
       const sortHistories = historyItems.sort((a: HistoryType, b: HistoryType) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       });
