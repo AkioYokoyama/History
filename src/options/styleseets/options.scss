@@ -11,11 +11,15 @@
     border: none;
     color: white;
     width: 50px;
+    cursor: pointer;
     &--save {
       background: orange;
     }
     &--add {
       background: purple;
+    }
+    &:hover {
+      opacity: 80%;
     }
   }
 }

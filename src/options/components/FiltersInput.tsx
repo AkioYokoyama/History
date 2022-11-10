@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC, useState, useEffect } from "react"
 
-const FiltersInput: FC = () => {
+export const FiltersInput: FC = () => {
   const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
 
   const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
@@ -14,7 +14,7 @@ const FiltersInput: FC = () => {
 
   useEffect(() => { }, [filters, formValue]);
 
-  const handleAddButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
+  const handleAddButtonClick = (): void => {
     if (!historyFilter) return;
 
     const historyFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
@@ -40,5 +40,3 @@ const FiltersInput: FC = () => {
     </div>
   );
 }
-
-export default FiltersInput;
