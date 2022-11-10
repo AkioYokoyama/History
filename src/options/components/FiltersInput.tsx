@@ -14,7 +14,7 @@ export const FiltersInput: FC = () => {
 
   useEffect(() => { }, [filters, formValue]);
 
-  const handleAddButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
+  const handleAddButtonClick = (): void => {
     if (!historyFilter) return;
 
     const historyFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
