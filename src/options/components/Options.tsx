@@ -1,10 +1,9 @@
 import React from 'react';
 import { FC, useState } from "react"
-import ReactDOM from 'react-dom/client';
-import FiltersInput from './FiltersInput';
-import './options.scss'
+import { FiltersInput } from './FiltersInput';
+import '../styleseets/options.scss'
 
-const Options: FC = () => {
+export const Options: FC = () => {
   const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
   const [historyTerm, setHistoryTerm] = useState(storageHistoryTerm);
 
@@ -32,9 +31,3 @@ const Options: FC = () => {
     </>
   );
 }
-
-const rootElement = document.getElementById('root');
-// https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
-if (!rootElement) throw new Error('Failed to find the root element');
-const root = ReactDOM.createRoot(rootElement);
-root.render(<Options />);
