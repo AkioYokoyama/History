@@ -25,7 +25,7 @@ export const FiltersInput: FC = () => {
     setFormValue('');
   }
 
-  const handleDeleteIconClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleDeleteIconClick = (e: React.MouseEvent<HTMLImageElement>) => {
     const newFilters = filters.filter((f: string) => f !== e.currentTarget.dataset.url);
     localStorage.setItem('historyFilters', JSON.stringify(newFilters));
     setFilters(newFilters);
@@ -41,7 +41,17 @@ export const FiltersInput: FC = () => {
       <div>登録済み</div>
       <ul className="filters__list">
         {filters.map((filter: string) => {
-          return <li><span onClick={handleDeleteIconClick} data-url={filter}>x</span>{filter}</li>
+          return (
+            <li className="filters__list--item">
+              <img
+                onClick={handleDeleteIconClick}
+                data-url={filter}
+                className="filters__list--delete"
+                src="img/cross16.svg"
+                alt="x"
+              />
+              {filter}
+            </li>)
         })}
       </ul>
     </div>
