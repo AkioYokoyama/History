@@ -33,11 +33,12 @@ export const FiltersInput: FC = () => {
 
   return (
     <div className="filters">
-      <div>filter</div>
+      <div>White List</div>
       <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryFilterChange} />
       <div className="filters__button-area">
         <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
       </div>
+      <div>登録済み</div>
       <ul className="filters__list">
         {filters.map((filter: string) => {
           return <li><span onClick={handleDeleteIconClick} data-url={filter}>x</span>{filter}</li>
