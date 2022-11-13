@@ -24,13 +24,24 @@
   }
 }
 
-.filters {
+.whitelist {
   margin-top: 20px;
   &__button-area {
     text-align: center;
     width: 150px;
   }
   &__list {
+    margin-top: 0;
     margin-left: -26px;
+    &--item {
+      line-height: 20px;
+    }
+    &--delete {
+      width: 10px;
+      margin-right: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }

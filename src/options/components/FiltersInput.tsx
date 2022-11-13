@@ -2,39 +2,56 @@ import React from 'react';
 import { FC, useState, useEffect } from "react"
 
 export const FiltersInput: FC = () => {
-  const storageHistoryFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
+  const storageHistoryWhitelist: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
 
-  const [filters, setFilters] = useState(JSON.parse(storageHistoryFilters));
-  const [historyFilter, setHistoryFilter] = useState('');
+  const [whitelist, setWhitelist] = useState(JSON.parse(storageHistoryWhitelist));
+  const [historyWhitelist, setHistoryWhitelist] = useState('');
   const [formValue, setFormValue] = useState('');
 
-  const handleHistoryFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setHistoryFilter(e.target.value);
+  const handleHistoryWhitelistChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setHistoryWhitelist(e.target.value);
   }
 
-  useEffect(() => { }, [filters, formValue]);
+  useEffect(() => { }, [whitelist, formValue]);
 
   const handleAddButtonClick = (): void => {
-    if (!historyFilter) return;
+    if (!historyWhitelist) return;
 
-    const historyFilters: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
-    const filters = JSON.parse(historyFilters);
-    filters.push(historyFilter)
-    localStorage.setItem('historyFilters', JSON.stringify(filters));
-    setFilters(filters);
+    const currnetStorageWhitelist: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
+    const newStorageWhitelist = JSON.parse(currnetStorageWhitelist);
+    newStorageWhitelist.push(historyWhitelist)
+    localStorage.setItem('historyFilters', JSON.stringify(newStorageWhitelist));
+    setWhitelist(newStorageWhitelist);
     setFormValue('');
   }
 
+  const handleDeleteIconClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    const newWhitelist = whitelist.filter((f: string) => f !== e.currentTarget.dataset.url);
+    localStorage.setItem('historyFilters', JSON.stringify(newWhitelist));
+    setWhitelist(newWhitelist);
+  }
+
   return (
-    <div className="filters">
-      <div>filter</div>
-      <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryFilterChange} />
-      <div className="filters__button-area">
+    <div className="whitelist">
+      <div>White List</div>
+      <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryWhitelistChange} />
+      <div className="whitelist__button-area">
         <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
       </div>
-      <ul className="filters__list">
-        {filters.map((filter: string) => {
-          return <li>{filter}</li>
+      <div>登録済み</div>
+      <ul className="whitelist__list">
+        {whitelist.map((whitelistUrl: string) => {
+          return (
+            <li className="whitelist__list--item">
+              <img
+                onClick={handleDeleteIconClick}
+                data-url={whitelistUrl}
+                className="whitelist__list--delete"
+                src="img/cross16.svg"
+                alt="x"
+              />
+              {whitelistUrl}
+            </li>)
         })}
       </ul>
     </div>
