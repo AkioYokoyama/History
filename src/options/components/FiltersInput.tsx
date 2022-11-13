@@ -32,21 +32,21 @@ export const FiltersInput: FC = () => {
   }
 
   return (
-    <div className="filters">
+    <div className="whitelist">
       <div>White List</div>
       <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryWhitelistChange} />
-      <div className="filters__button-area">
+      <div className="whitelist__button-area">
         <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
       </div>
       <div>登録済み</div>
-      <ul className="filters__list">
+      <ul className="whitelist__list">
         {whitelist.map((whitelistUrl: string) => {
           return (
-            <li className="filters__list--item">
+            <li className="whitelist__list--item">
               <img
                 onClick={handleDeleteIconClick}
                 data-url={whitelistUrl}
-                className="filters__list--delete"
+                className="whitelist__list--delete"
                 src="img/cross16.svg"
                 alt="x"
               />
