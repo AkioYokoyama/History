@@ -25,6 +25,12 @@ export const FiltersInput: FC = () => {
     setFormValue('');
   }
 
+  const handleDeleteIconClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    const newFilters = filters.filter((f: string) => f !== e.currentTarget.dataset.url);
+    localStorage.setItem('historyFilters', JSON.stringify(newFilters));
+    setFilters(newFilters);
+  }
+
   return (
     <div className="filters">
       <div>filter</div>
@@ -34,7 +40,7 @@ export const FiltersInput: FC = () => {
       </div>
       <ul className="filters__list">
         {filters.map((filter: string) => {
-          return <li>{filter}</li>
+          return <li><span onClick={handleDeleteIconClick} data-url={filter}>x</span>{filter}</li>
         })}
       </ul>
     </div>
