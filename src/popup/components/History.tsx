@@ -14,7 +14,7 @@ export const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
             <a className="history__items--link"
               href={history.url}
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer noopener">
                 {truncateTitle(13, history.title)}
             </a>
             <img
