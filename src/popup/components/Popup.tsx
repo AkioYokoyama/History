@@ -3,13 +3,14 @@ import { History } from './History';
 import { GarbageBox } from './GarbageBox';
 import { HistoryType, DefaultStartTime } from '../types/HistoryType'
 import { getFilters } from '../modules/getFilters';
+import { sortHistories } from '../modules/sortHistories';
+import { filterHistories } from '../modules/filterHistories';
 import '../styleseets/popup.scss'
 
-export const Popup: FC = () => {
+export function usePopupProps() {
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [historyTerm, ] = useState(localStorage['historyTerm'] ?? localStorage['historyTerm']);
   const [isInitialize, setIsInitialize] = useState(false);
-
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
 
   const handleClickDelete = (e: MouseEvent<HTMLElement>) => {
@@ -26,22 +27,30 @@ export const Popup: FC = () => {
   }
 
   useEffect(() => {
-    // TODO any型
     chrome.history.search({'text': '', 'startTime': DefaultStartTime}, (historyItems: any) => {
-      const sortHistories = historyItems.sort((a: HistoryType, b: HistoryType) => {
-        return (a.visitCount < b.visitCount) ? 1 : -1;
-      });
-      const filteredHistories = sortHistories.filter((history: HistoryType) => {
-        const matched = getFilters().find((f): boolean => history.url === f);
-        if (!matched || history.title === '') {
-          return deleteHistory(history.url);
-        }
-        return history;
-      });
+      const sortedHistories = sortHistories(historyItems);
+      const filteredHistories = filterHistories(sortedHistories, getFilters, deleteHistory);
       setHistories(filteredHistories);
       setIsInitialize(true);
     });
   }, [isInitialize, historyTerm]);
+
+  return {
+    histories,
+    handleClickDelete,
+    handleClickAllDeleteButton,
+  }
+}
+
+function PopupWrapper({
+  histories,
+  handleClickDelete,
+  handleClickAllDeleteButton,
+}: {
+  histories: HistoryType[];
+  handleClickDelete: (e: MouseEvent<HTMLElement>) => void;
+  handleClickAllDeleteButton: () => void;
+}) {
 
   return (
     <div>
@@ -49,4 +58,8 @@ export const Popup: FC = () => {
       <History histories={histories} handleClickDelete={handleClickDelete} />
     </div>
   );
+}
+
+export const Popup: FC = () => {
+  return <PopupWrapper {...usePopupProps()} />
 }
