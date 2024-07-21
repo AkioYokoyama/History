@@ -2,6 +2,7 @@ import { FC, useState, useEffect, MouseEvent } from 'react';
 import { History } from './History';
 import { GarbageBox } from './GarbageBox';
 import { HistoryType } from '../types/HistoryType'
+import { getFilters } from '../modules/getFilters';
 import '../styleseets/popup.scss'
 
 export const Popup: FC = () => {
@@ -10,14 +11,6 @@ export const Popup: FC = () => {
   const [isInitialize, setIsInitialize] = useState(false);
 
   const deleteHistory = (url: string) => chrome.history.deleteUrl({ url: url });
-
-  const getFilters = (): string[] => {
-    const storageFilters = localStorage.getItem('historyFilters');
-    if (storageFilters) {
-        return JSON.parse(storageFilters);
-    }
-    return [];
-  }
 
   const handleClickDelete = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
