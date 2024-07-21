@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import { History } from './History';
 import { GarbageBox } from './GarbageBox';
-import { HistoryType } from '../types/HistoryType'
+import { HistoryType, DefaultStartTime } from '../types/HistoryType'
 import { getFilters } from '../modules/getFilters';
 import '../styleseets/popup.scss'
 
@@ -27,7 +27,7 @@ export const Popup: FC = () => {
 
   useEffect(() => {
     // TODO any型
-    chrome.history.search({'text': '', 'startTime': Number(historyTerm)}, (historyItems: any) => {
+    chrome.history.search({'text': '', 'startTime': DefaultStartTime}, (historyItems: any) => {
       const sortHistories = historyItems.sort((a: HistoryType, b: HistoryType) => {
         return (a.visitCount < b.visitCount) ? 1 : -1;
       });

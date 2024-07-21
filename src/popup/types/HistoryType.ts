@@ -11,3 +11,5 @@ export type HistoryProps = {
   histories: HistoryType[];
   handleClickDelete: (e: MouseEvent<HTMLElement>) => void;
 }
+
+export const DefaultStartTime = 7;
