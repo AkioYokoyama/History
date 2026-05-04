@@ -2,6 +2,9 @@
   "name": "clear-history",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "svgo": "^2.8.0"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
