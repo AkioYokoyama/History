@@ -7,7 +7,7 @@
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": {
-      "16": "img/cross16.svg"
+      "16": "img/Y.png"
     }
   },
   "options_ui": {
@@ -15,7 +15,7 @@
     "open_in_tab": true
   },
   "icons": {
-    "16": "img/cross16.svg",
+    "16": "img/Y.png",
     "48": "img/Y.png",
     "128": "img/Y.png"
   }
