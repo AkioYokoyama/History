@@ -47,7 +47,7 @@ export const FiltersInput: FC = () => {
                 onClick={handleDeleteIconClick}
                 data-url={whitelistUrl}
                 className="whitelist__list--delete"
-                src="img/cross16.svg"
+                src={chrome.runtime.getURL("img/cross16.svg")}
                 alt="x"
               />
               {whitelistUrl}

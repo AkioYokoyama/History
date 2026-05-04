@@ -21,7 +21,7 @@ export const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
               onClick={handleClickDelete}
               data-url={history.url}
               className="history__items--delete"
-              src="img/cross16.svg"
+              src={chrome.runtime.getURL("img/cross16.svg")}
               alt="x"
             />
           </li>
