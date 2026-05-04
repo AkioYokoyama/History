@@ -7,7 +7,7 @@ export const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ han
       <img
         onClick={ () => handleClickAllDeleteButton() }
         className="garbage-box--delete-all"
-        src="img/delete-all.svg"
+        src={chrome.runtime.getURL("img/delete-all.svg")}
         alt="全削除"
       />
     </div>
