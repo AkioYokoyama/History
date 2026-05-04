@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "overrides": {
-    "svgo": "^2.8.0",
+    "svgo": "^4.0.0",
     "serialize-javascript": "7.0.5",
     "underscore": ">=1.13.8"
   },
