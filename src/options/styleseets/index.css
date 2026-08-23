@@ -1,0 +1,2 @@
+/* scssとは別にtailwind用のcssファイルが必要なため */
+@import "tailwindcss";
