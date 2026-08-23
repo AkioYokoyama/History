@@ -1,11 +1,7 @@
-.garbage-box {
-  display: flex;
-  justify-content: end;
-  &--delete-all {
-    width: 16px;
-    height: 16px;
-    margin-right: -3px;
-  }
+.garbage-box--delete-all {
+  width: 16px;
+  height: 16px;
+  margin-right: -3px;
 }
 
 .history {

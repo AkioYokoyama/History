@@ -3,7 +3,7 @@ import '../styleseets/popup.scss'
 
 export const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
   return (
-    <div className="garbage-box">
+    <div className="flex justify-end garbage-box">
       <img
         onClick={ () => handleClickAllDeleteButton() }
         className="garbage-box--delete-all"
