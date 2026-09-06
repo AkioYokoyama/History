@@ -1,7 +1,6 @@
-import { FC, useState, useEffect } from "react"
-import '../styleseets/popup.scss'
+import { useState, useEffect } from "react";
 
-export const Favicon: FC<{url: string}> = ({url}) => {
+export function Favicon({url}: {url: string}) {
   const [favicon, setFavicon] = useState('');
 
   useEffect(() => {
@@ -12,5 +11,5 @@ export const Favicon: FC<{url: string}> = ({url}) => {
     }
   }, [url]);
 
-  return <img className="history__items--favicon" src={favicon} alt="" />;
+  return <img className="mx-1 h-3 w-3" src={favicon} alt="" />;
 }

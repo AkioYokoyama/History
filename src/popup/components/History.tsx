@@ -1,26 +1,25 @@
-import { FC } from 'react';
 import { Favicon } from './Favicon';
-import '../styleseets/popup.scss'
-import truncateTitle from '../modules/truncateTitle'
-import { HistoryProps } from '../types/HistoryType'
+import truncateTitle from '../modules/truncateTitle';
+import { HistoryProps } from '../types/HistoryType';
 
-export const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
+export function History({ histories, handleClickDelete }: HistoryProps) {
   return (
-    <ul className="history">
+    <ul className="w-52">
       {histories.map((history) => {
         return (
-          <li className="history__items" key={history.id}>
-            <Favicon url={history.url} />
-            <a className="history__items--link"
+          <li className="flex items-center space-y-0.5" key={history.id}>
+            <a className="flex no-underline hover:opacity-70 hover:underline items-center"
               href={history.url}
               target="_blank"
-              rel="noreferrer noopener">
-                {truncateTitle(13, history.title)}
+              rel="noreferrer noopener"
+            >
+              <Favicon url={history.url} />
+              {truncateTitle(13, history.title)}
             </a>
             <img
               onClick={handleClickDelete}
               data-url={history.url}
-              className="history__items--delete"
+              className="ml-auto mr-3 h-2 w-2 hover:cursor-pointer"
               src={chrome.runtime.getURL("img/cross16.svg")}
               alt="x"
             />
