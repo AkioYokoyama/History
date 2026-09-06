@@ -1,6 +1,8 @@
-import { FC } from 'react';
-
-export const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
+export function GarbageBox({
+  handleClickAllDeleteButton
+}: {
+  handleClickAllDeleteButton: () => void
+}) {
   return (
     <div className="flex justify-end mb-1.5">
       <img

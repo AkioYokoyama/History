@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Favicon } from './Favicon';
-import truncateTitle from '../modules/truncateTitle'
-import { HistoryProps } from '../types/HistoryType'
+import truncateTitle from '../modules/truncateTitle';
+import { HistoryProps } from '../types/HistoryType';
 
-export const History: FC<HistoryProps> = ({ histories, handleClickDelete }) => {
+export function History({ histories, handleClickDelete }: HistoryProps) {
   return (
     <ul className="w-52">
       {histories.map((history) => {

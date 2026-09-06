@@ -1,7 +1,7 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import { History } from './History';
 import { GarbageBox } from './GarbageBox';
-import { HistoryType, DefaultStartTime } from '../types/HistoryType'
+import { HistoryType, DefaultStartTime } from '../types/HistoryType';
 import { getFilters } from '../modules/getFilters';
 import { sortHistories } from '../modules/sortHistories';
 import { filterHistories } from '../modules/filterHistories';
@@ -59,6 +59,6 @@ function PopupWrapper({
   );
 }
 
-export const Popup: FC = () => {
+export function Popup() {
   return <PopupWrapper {...usePopupProps()} />
 }

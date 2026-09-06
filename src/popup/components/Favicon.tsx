@@ -1,6 +1,6 @@
-import { FC, useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
-export const Favicon: FC<{url: string}> = ({url}) => {
+export function Favicon({url}: {url: string}) {
   const [favicon, setFavicon] = useState('');
 
   useEffect(() => {
