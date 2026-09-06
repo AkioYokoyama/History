@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react';
 
 export function FiltersInput() {
   const storageHistoryWhitelist: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
