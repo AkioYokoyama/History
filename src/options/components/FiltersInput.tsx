@@ -1,57 +1,52 @@
-import React from 'react';
-import { FC, useState, useEffect } from "react"
+import { useFiltersWhitelist } from '../modules/useFiltersWhitelist';
 
-export const FiltersInput: FC = () => {
-  const storageHistoryWhitelist: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
-
-  const [whitelist, setWhitelist] = useState(JSON.parse(storageHistoryWhitelist));
-  const [historyWhitelist, setHistoryWhitelist] = useState('');
-  const [formValue, setFormValue] = useState('');
-
-  const handleHistoryWhitelistChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setHistoryWhitelist(e.target.value);
-  }
-
-  useEffect(() => { }, [whitelist, formValue]);
-
-  const handleAddButtonClick = (): void => {
-    if (!historyWhitelist) return;
-
-    const currnetStorageWhitelist: string = localStorage.getItem('historyFilters') ?? JSON.stringify([]);
-    const newStorageWhitelist = JSON.parse(currnetStorageWhitelist);
-    newStorageWhitelist.push(historyWhitelist)
-    localStorage.setItem('historyFilters', JSON.stringify(newStorageWhitelist));
-    setWhitelist(newStorageWhitelist);
-    setFormValue('');
-  }
-
-  const handleDeleteIconClick = (e: React.MouseEvent<HTMLImageElement>) => {
-    const newWhitelist = whitelist.filter((f: string) => f !== e.currentTarget.dataset.url);
-    localStorage.setItem('historyFilters', JSON.stringify(newWhitelist));
-    setWhitelist(newWhitelist);
-  }
+export function FiltersInput() {
+  const {
+    whitelist,
+    inputValue,
+    handleInputChange,
+    addToWhitelist,
+    removeFromWhitelist,
+  } = useFiltersWhitelist();
 
   return (
-    <div className="whitelist">
-      <div>White List</div>
-      <input className="options__section" type="text" defaultValue={formValue} onChange={handleHistoryWhitelistChange} />
-      <div className="whitelist__button-area">
-        <input className="options__button options__button--add" type="button" value="追加" onClick={handleAddButtonClick} />
+    <div className="mt-5">
+      <div className="mb-2.5">
+        <label htmlFor="whitelist" className="font-semibold">White List</label>
+        <input
+          id="whitelist"
+          type="text"
+          className="px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm text-gray-900 focus:outline-none"
+          defaultValue={inputValue}
+          onChange={handleInputChange}
+        />
       </div>
-      <div>登録済み</div>
-      <ul className="whitelist__list">
+      <div className="text-center">
+        <input
+          className="w-16 py-1.5 text-white border-none rounded bg-violet-500 hover:opacity-70 hover:cursor-pointer"
+          type="button"
+          value="追加"
+          onClick={addToWhitelist}
+        />
+      </div>
+
+      <div className="mt-2.5 font-semibold">登録済み</div>
+      <ul>
         {whitelist.map((whitelistUrl: string) => {
           return (
-            <li className="whitelist__list--item">
-              <img
-                onClick={handleDeleteIconClick}
-                data-url={whitelistUrl}
-                className="whitelist__list--delete"
-                src={chrome.runtime.getURL("img/cross16.svg")}
-                alt="x"
-              />
-              {whitelistUrl}
-            </li>)
+            <li>
+              <span className="flex items-center leading-5 hover:underline">
+                <img
+                  onClick={() => removeFromWhitelist(whitelistUrl)}
+                  data-url={whitelistUrl}
+                  className="w-2.5 h-2.5 mr-1.5 hover:cursor-pointer"
+                  src={chrome.runtime.getURL("img/cross16.svg")}
+                  alt="x"
+                />
+                {whitelistUrl}
+              </span>
+            </li>
+          );
         })}
       </ul>
     </div>
