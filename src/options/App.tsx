@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import './styleseets/index.css';
 import { Options } from './components/Options';
 
 const rootElement = document.getElementById('root');
