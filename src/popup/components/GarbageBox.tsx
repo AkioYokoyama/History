@@ -1,12 +1,11 @@
 import { FC } from 'react';
-import '../styleseets/popup.scss'
 
 export const GarbageBox: FC<{ handleClickAllDeleteButton: () => void }> = ({ handleClickAllDeleteButton }) => {
   return (
-    <div className="flex justify-end garbage-box">
+    <div className="flex justify-end mb-1.5">
       <img
         onClick={ () => handleClickAllDeleteButton() }
-        className="garbage-box--delete-all"
+        className="w-4 h-4 hover:cursor-pointer hover:opacity-70"
         src={chrome.runtime.getURL("img/delete-all.svg")}
         alt="全削除"
       />

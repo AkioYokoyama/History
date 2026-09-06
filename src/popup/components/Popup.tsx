@@ -5,7 +5,6 @@ import { HistoryType, DefaultStartTime } from '../types/HistoryType'
 import { getFilters } from '../modules/getFilters';
 import { sortHistories } from '../modules/sortHistories';
 import { filterHistories } from '../modules/filterHistories';
-import '../styleseets/popup.scss'
 
 export function usePopupProps() {
   const [histories, setHistories] = useState<HistoryType[]>([]);
@@ -53,7 +52,7 @@ function PopupWrapper({
 }) {
 
   return (
-    <div>
+    <div className="flex flex-col w-52 p-1 mt-0.5">
       <GarbageBox handleClickAllDeleteButton={handleClickAllDeleteButton} />
       <History histories={histories} handleClickDelete={handleClickDelete} />
     </div>
