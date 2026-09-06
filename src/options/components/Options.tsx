@@ -1,8 +1,8 @@
 import React from 'react';
-import { FC, useState } from "react"
+import { useState } from "react"
 import { FiltersInput } from './FiltersInput';
 
-export const Options: FC = () => {
+export function Options() {
   const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
   const [historyTerm, setHistoryTerm] = useState(storageHistoryTerm);
 
