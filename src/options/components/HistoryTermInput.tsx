@@ -1,16 +1,11 @@
-import { useState } from 'react';
+import { useHistoryTerm } from '../modules/useHistoryTerm';
 
 export function HistoryTermInput() {
-  const storageHistoryTerm: string = localStorage.getItem('historyTerm') ?? '7';
-  const [historyTerm, setHistoryTerm] = useState(storageHistoryTerm);
-
-  const handleHistoryTermChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setHistoryTerm(e.target.value);
-  }
-  const handleSaveButtonClick = (e: React.MouseEvent<HTMLInputElement>): void => {
-    localStorage.setItem('historyTerm', historyTerm);
-    e.preventDefault();
-  }
+  const {
+    historyTerm,
+    onChangeHistoryTerm,
+    onClickSaveButton,
+  } = useHistoryTerm();
 
   return (
     <div>
@@ -21,7 +16,7 @@ export function HistoryTermInput() {
           type="text"
           className="px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm text-gray-900 focus:outline-none"
           defaultValue={historyTerm}
-          onChange={handleHistoryTermChange}
+          onChange={onChangeHistoryTerm}
         />
       </div>
 
@@ -30,7 +25,7 @@ export function HistoryTermInput() {
           className="w-16 py-1.5 text-white border-none rounded bg-yellow-500 hover:opacity-70 hover:cursor-pointer"
           type="button"
           value="保存"
-          onClick={handleSaveButtonClick}
+          onClick={onClickSaveButton}
         />
       </div>
     </div>
